@@ -1,0 +1,147 @@
+extends layoutAdmin
+
+block content
+ 
+    script(type='text/javascript', src='https://code.jquery.com/jquery-3.3.1.js')
+
+
+ 
+    style.
+        #map {
+            width: 100%;
+            height:350px;
+        }
+
+    br  
+    br
+    .bg-color-container
+        
+        h1 Dengue Report 
+        t1 Submit Dengue affected area
+        form#form-create-dengue(role='form', method="POST", action='../dengue')
+            hr  
+        
+            label(for='Location') Location
+            #map
+            br
+
+
+
+            .form-group
+                label(for='Address') Address
+                input#form-address.form-control(type='text', name='address', placeholder="Please Click on Map...", onkeypress="return false;")
+                br
+                .form-row
+                    .form-group.col-md-5
+                        label(for='Lat') Latitude
+                        input#form-lat.form-control(type='text', name='lat', placeholder="Please Click on Map...", onkeypress="return false;")
+                    .form-group.col-md-5
+                        label(for='Lng') Longitude
+                        input#form-lng.form-control(type='text', name='lng', placeholder="Please Click on Map...", onkeypress="return false;")
+
+            .form-group
+                label(for='InputIncident') Notes
+                textarea#exampleFormControlTextarea1.form-control(rows='5', name='notes')
+
+
+ 
+
+            button.btn.btn-primary(type='submit') Submit
+    
+
+
+         
+
+
+    script.
+
+        var map;
+        var markers = [];
+        var currentMarker = {};
+        var geocoder;
+        var infoWindow;
+        var form_Address = document.getElementById('form-address');
+        var form_Lat = document.getElementById('form-lat');
+        var form_Lng = document.getElementById('form-lng');
+
+        // Method accessed on API callback
+        function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 1.352083, lng: 103.819836 }, // LatLng of Singapore
+                    zoom: 11.5
+                });    
+
+                map.addListener('click', function(e){
+                    parseMarker(e.latLng, map);
+                });   
+
+                geocoder = new google.maps.Geocoder;
+                infoWindow = new google.maps.InfoWindow;
+
+        }
+
+        // Checks if another Marker has already been placed on map
+        // If so, remove previous marker and set new one.
+        // Otherwise, just set a new marker
+        function parseMarker(latLng, map){
+            if(isEmpty(currentMarker)){
+                setMarker(latLng, map)
+            }else{
+                removeMarkers();
+                setMarker(latLng, map)
+            }
+        }
+
+        // Sets marker on the map
+        function setMarker(latLng, map){
+            var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+            map.panTo(latLng);
+            markers.push(marker);
+            reverseGeocode(geocoder, map, infoWindow, latLng, marker);
+        }
+
+        // Gets location address based on lat & lng
+        function reverseGeocode(geocoder, map, infowindow, latLng, marker) {
+            geocoder.geocode({'location': latLng}, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        currentMarker.address = results[0].formatted_address.replace(/,/g, '');
+                        currentMarker.lat = latLng.lat();
+                        currentMarker.lng = latLng.lng();
+                        form_Address.value = currentMarker.address;
+                        form_Lat.value = latLng.lat();
+                        form_Lng.value = latLng.lng();
+                    } else {
+                       window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+        // Removes Marker from Map
+        function removeMarkers(){
+            for(var i=0;i<markers.length;i++){
+                markers[i].setMap(null);
+            }
+        }
+
+        // Checks if object is empty
+        function isEmpty(obj){
+            for(var key in obj){
+                if(obj.hasOwnProperty(key)){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    // API Call
+    script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdPOsbD2Dg8qse475kMZjuhmEWz0wcp9c&callback=initMap")
+
+  
+

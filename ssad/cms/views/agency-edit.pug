@@ -1,0 +1,59 @@
+extends layoutAdmin
+
+block content
+    .content
+        // START JUMBOTRON
+        //.jumbotron(data-pages='parallax')
+        .container-fluid.container-fixed-lg.sm-p-l-0.sm-p-r-0
+            .inner
+        // END JUMBOTRON
+        // START CONTAINER FLUID
+        <div class = "bg-color-container4">
+            <!-- START card -->
+            <div class="card card-transparent">
+              <div class="card-header ">                
+                <h5 class="card-title">#{page.name}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Edit Agency</h6>
+              </div>
+
+                <div class="clearfix"></div>
+              </div>
+              <div class="card-block">
+                    form#form-agency-edit(role='form', method="POST", action='../agency/edit')
+                        <input type="hidden" name="agency_id" value= #{data.agency.agency_id}>
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Name
+                                    input#name.form-control(type='text', name='agency_name', placeholder='Change name', required='', value= data.agency.agency_name )
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Contact
+                                    input#name.form-control(type='text', name='agency_contactno', placeholder='Change contact no', required='', value= data.agency.agency_contactno)
+
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Email
+                                    input#name.form-control(type='text', name='agency_email', placeholder='Change email', required='', value= data.agency.agency_email )
+
+                        .row.align-items-end
+                            .text-right.col-sm-12 
+
+                            div
+                                a.button.btn.btn(href='../agency/') Cancel
+                            div
+                                a
+                                    button.btn.btn-success(type='submit', style='margin-left: 39%;') Update
+
+                                
+                        
+
+                            
+                        
+                                    
+              </div>
+            </div>
+            <!-- END card -->
+        </div>

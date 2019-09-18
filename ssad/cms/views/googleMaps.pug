@@ -1,0 +1,478 @@
+extends layoutAdmin
+
+block content
+
+    style.
+        #map {
+            width: 90%;
+            height: 500px;
+            margin-left:100px;
+            margin-right:100px;
+            border: 2px solid #000000;
+        }
+
+        #map_title {
+            margin-top: 20px;
+            margin-left: 100px;
+            font-style: italic;
+            font-family: cursive;
+            color: #AA33FF;
+        }
+
+        #location-form {
+            margin-left: 20px;
+        }
+
+        #location-input {
+            width: 30%;
+        }
+
+        #prev_btn {
+            width: 150px;
+            background-color: #FFAA00;
+            border: 1px solid #000000;
+            margin-left: 40%;
+            margin-right: 50px;
+        }
+
+        #next_btn {
+            width: 150px;
+            background-color: #00AAFF;
+            border: 1px solid #000000;
+            margin-left: 50px;
+        }
+
+        #prev_btn:active {
+            background-color: #FFAA00;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        #next_btn:active {
+            background-color: #00AAFF;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+    h1#map_title Google Map
+
+    #map
+    br
+
+    button.btn.btn.primary(id="prev_btn", align='middle') Previous Marker 
+    button.btn.btn.primary(id="next_btn", align='middle') Next Marker
+
+    // Map Logic
+    script.
+
+        var map;
+        var num;
+        var addressList = [];
+
+        // Latlng holders for PSI
+        var sgNorth;
+        var sgSouth;
+        var sgEast;
+        var sgWest;
+        var sgCentral;
+
+        var northPSIvalue = parseInt("#{psin}");
+        var southPSIvalue = parseInt("#{psis}");
+        var eastPSIvalue = parseInt("#{psie}");
+        var westPSIvalue = parseInt("#{psiw}");
+        var centralPSIvalue = parseInt("#{psic}");
+
+        var prevBtn = document.getElementById('prev_btn');
+        var nextBtn = document.getElementById('next_btn');
+        prevBtn.addEventListener('click', prevMarker);
+        nextBtn.addEventListener('click', nextMarker);
+        var currentMarker = {};
+        var markerCounter = 0;
+        var markers = [];
+
+        var infoWindow;
+        var geocoder;
+
+        // Moves map focus to previous marker
+        function prevMarker(){
+            if(markerCounter == 0){
+                markerCounter = num - 1;
+                var latLng = new google.maps.LatLng(addressList[markerCounter].lat, addressList[markerCounter].lng);
+                map.panTo(latLng);
+                setInfoWindow(map, markers[markerCounter], addressList[markerCounter].address, addressList[markerCounter].lat, addressList[markerCounter].lng, addressList[markerCounter].title);
+            }else{
+                markerCounter--;
+                var latLng = new google.maps.LatLng(addressList[markerCounter].lat, addressList[markerCounter].lng);
+                map.panTo(latLng);
+                setInfoWindow(map, markers[markerCounter], addressList[markerCounter].address, addressList[markerCounter].lat, addressList[markerCounter].lng, addressList[markerCounter].title);
+            }
+        }
+
+        // Moves map focus to next marker
+        function nextMarker(){
+            if(markerCounter == num - 1){
+                markerCounter = 0;
+                var latLng = new google.maps.LatLng(addressList[markerCounter].lat, addressList[markerCounter].lng);
+                map.panTo(latLng);
+                setInfoWindow(map, markers[markerCounter], addressList[markerCounter].address, addressList[markerCounter].lat, addressList[markerCounter].lng, addressList[markerCounter].title);
+            }else{
+                markerCounter++;
+                var latLng = new google.maps.LatLng(addressList[markerCounter].lat, addressList[markerCounter].lng);
+                map.panTo(latLng);
+                setInfoWindow(map, markers[markerCounter], addressList[markerCounter].address, addressList[markerCounter].lat, addressList[markerCounter].lng, addressList[markerCounter].title);
+            }
+        }
+
+        // Formats and Opens InfoWindow
+        function setInfoWindow(map, marker, address, lat, lng, title){
+            var contentString = `<div id="content"> 
+                                    <h6 style=color:black>Location:</h6> <i style=color:black>${address}</i>    
+                                    <br/>
+                                    <br/>
+                                    <h6 style=color:black>Lat:</h6> <i style=color:black>${lat}</i> 
+                                    <br/>
+                                    <br/>
+                                    <h6 style=color:black>Lng:</h6> <i style=color:black>${lng}</i>
+                                    <br/>
+                                    <br/>
+                                    <h6 style=color:black>Title:</h6> <i style=color:black>${title}</i>
+                                </div>
+                                `;
+
+            infoWindow.setContent(contentString);
+            infoWindow.setPosition(new google.maps.LatLng(lat, lng));
+            infoWindow.open(map, marker);
+        }
+
+        // Checks Incident Status & Assigns different coloured icons
+        function parseIcon(status){
+            if(status == 1){ // Red == active
+                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            }else if(status == 2){ // Yellow == interim
+                return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+            }else if(status == 3){ // Green == completed
+                return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            }else{ // Blue == warning
+                return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+            }
+        }
+
+        // Checks if object is empty
+        function isEmpty(obj){
+            for(var key in obj){
+                if(obj.hasOwnProperty(key)){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Checks if PSI in the 5 regions are above 200
+        // Plot Google Maps Circle if psi > 200
+        function checkPSI(psiValue, region){
+            switch(region){
+                case "north": 
+                    if(northPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: sgNorth,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore North</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgNorth.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgNorth.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${northPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map, circleMarker);
+                        });
+                    }
+                    break;
+                case "south":
+                    if(southPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: sgSouth,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore South</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgSouth.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgSouth.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${southPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map, circleMarker);
+                        });
+                    }
+                    break;
+                case "east":
+                    if(eastPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: sgEast,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore East</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgEast.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgEast.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${eastPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map, circleMarker);
+                        });
+                    }
+                    break;
+                case "west":
+                    if(westPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: sgWest,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore West</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgWest.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgWest.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${westPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map, circleMarker);
+                        });
+                    }
+                    break;
+                case "central":
+                    if(centralPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: sgCentral,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore Central</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgCentral.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgCentral.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${centralPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map, circleMarker);
+                        });
+                    }
+                    break;
+            }
+        }     
+
+        // Initialize all data from DB
+        function initVars(){
+            var initialString = "#{db_Data}";
+            var firstSplit = initialString.split('+');
+            var arrayCounter = 0;
+            firstSplit.forEach(function(element){
+                var secondSplit = element.split(',');
+                var locationDetails = {};
+                locationDetails.address = secondSplit[0];
+                locationDetails.lat = secondSplit[1];
+                locationDetails.lng = secondSplit[2];
+                locationDetails.type = secondSplit[3];
+                locationDetails.status = secondSplit[4];
+                locationDetails.title = secondSplit[5];
+                addressList.push(locationDetails);
+                arrayCounter++;
+            });
+            num = addressList.length;
+
+            sgNorth = new google.maps.LatLng("1.4235972146461064", "103.81115050336939");
+            sgSouth = new google.maps.LatLng("1.2906999603795664", "103.82660002729517");
+            sgEast = new google.maps.LatLng("1.3450679056771975", "103.93165678999048");
+            sgWest = new google.maps.LatLng("1.3495984963255512", "103.71467680952173");
+            sgCentral = new google.maps.LatLng("1.3526188923868658", "103.82488341352564");
+
+            geocoder = new google.maps.Geocoder;
+            infoWindow = new google.maps.InfoWindow;
+        }
+
+        // Method accessed on API callback
+        function initMap() {
+            initVars();
+ 
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 1.352083, lng: 103.819836 }, // LatLng of Singapore
+                zoom: 11.5
+            });
+
+            map.addListener('click', function(){
+                infoWindow.close();
+            });
+
+            addressList.forEach(function(sc) {
+                if(sc.type.match('inreport')){
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(sc.lat,sc.lng),
+                        map: map,
+                        title: sc.address,
+                        animation: google.maps.Animation.DROP,
+                        icon: {
+                            url: parseIcon(sc.status),
+                            scaledSized: new google.maps.Size(23, 33)
+                        }
+                    });
+                    markers.push(marker);
+
+                    marker.addListener('click', function(){
+                        map.panTo(marker.position);
+                        var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>${sc.address}</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sc.lat}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sc.lng}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>${sc.title}</i>
+                                            </div>
+                                            `;
+
+                        infoWindow.setContent(contentString);
+                        infoWindow.open(map, marker);
+                    });
+                }else if(sc.type.match('dengue')){
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(sc.lat,sc.lng),
+                        map: map,
+                        title: sc.address,
+                        animation: google.maps.Animation.DROP,
+                        icon: {
+                            url: "assets/img/maps/mozzie.png",
+                            scaledSized: new google.maps.Size(23, 33)
+                        }
+                    });
+                    markers.push(marker);
+
+                    marker.addListener('click', function(){
+                        map.panTo(marker.position);
+                        var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>${sc.address}</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sc.lat}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sc.lng}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>${sc.title}</i>
+                                            </div>
+                                            `;
+
+                        infoWindow.setContent(contentString);
+                        infoWindow.open(map, marker);
+                    });
+                    
+                }
+                if(isEmpty(currentMarker)){
+                    currentMarker.address = sc.address;
+                    currentMarker.lat = sc.lat;
+                    currentMarker.lng = sc.lng;
+                } 
+            });
+
+            checkPSI(northPSIvalue, "north");
+            checkPSI(southPSIvalue, "south");
+            checkPSI(eastPSIvalue, "east");
+            checkPSI(westPSIvalue, "west");
+            checkPSI(centralPSIvalue, "central");
+
+        }
+
+    // API Call
+    script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdPOsbD2Dg8qse475kMZjuhmEWz0wcp9c&callback=initMap")
+

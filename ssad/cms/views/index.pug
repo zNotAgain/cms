@@ -1,0 +1,1009 @@
+extends layout
+
+block content
+  
+    
+
+  script(type='text/javascript', src='https://code.jquery.com/jquery-3.3.1.js')
+ 
+ 
+  style.
+      #map {
+          width: 100%;
+          height:350px;
+      }
+      #map2 {
+          width: 100%;
+          height:350px;
+      }
+      #map3 {
+          width: 100%;
+          height:350px;
+      }   
+ 
+
+    
+
+
+
+
+    
+  //- nav.navbar.navbar-expand-sm.navbar-dark.bg-dark
+  //-           a.navbar-brand(href="/") Home
+  //-           a.navbar-text(href="inc") Incident Report
+  //-           a.navbar-text(href="sendn") Send Notification
+  //-           a.navbar-text(href="updatesit") Update Situation
+  //-           a.navbar-text(href="map") Update Maps
+  //-           a.navbar-text(href="javascript:login()") Update Social Media
+
+
+ 
+  .jumbotron.jumbotron-fluid(style = "background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/stylesheets/jumbobackg.jpg'); background-size: 100% 100%; height: 1080px; margin-bottom: 0  ")
+        .container.container-fluid
+            .body2
+                br
+                br
+                br
+                br
+                br
+                .p2.text-xl-center.display-1(style = "color:rgb(255, 255, 255);") Welcome 
+                .p2.text-xl-center.lead(style = "color:rgb(255, 255, 255);") Information is precious. We are here to help.
+                .p2.text-xl-center.lead(style = "color:rgb(255, 255, 255);") Do not be kept in the dark. Be aware today.
+               
+ 
+
+
+  .jumbotron.jumbotron-fluid(style = "background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/stylesheets/back2.jpg'); background-size: 100% 100%; height: 1080px; margin-top:0; width:100%; margin-bottom:0; margin-right:0!important; margin-left:0 !important;  ")  
+    #carouselJumbotron.carousel.slide(data-ride='carousel'  style = "")
+        ol.carousel-indicators
+            li.active(data-target='#carouselJumbotron', data-slide-to='0')
+            li(data-target='#carouselJumbotron', data-slide-to='1')
+            li(data-target='#carouselJumbotron', data-slide-to='2')
+        .carousel-inner
+            each n in ann
+                .carousel-item
+                    .bg-color-container5
+                        .jumbotron(style = "background:rgb(255, 255, 255 , 0);")
+                            h1.display-4(style = "color:rgb(255, 255, 255);") #{n.title}
+                            p.lead(style = "color:rgb(255, 255, 255);") #{n.datetime}
+                            hr.my-4(style = "color:rgb(255, 255, 255);")
+                            p(style = "color:rgb(255, 255, 255);") #{n.content} 
+                            hr(style = "color:rgb(255, 255, 255);")
+
+        a.carousel-control-prev(href='#carouselJumbotron', role='button', data-slide='prev')
+            span.carousel-control-prev-icon(aria-hidden='true')
+            span.sr-only Previous
+        a.carousel-control-next(href='#carouselJumbotron', role='button', data-slide='next')
+            span.carousel-control-next-icon(aria-hidden='true')
+            span.sr-only Next
+
+    //- .carousel-inner
+    //-     each n in ann
+    //-         .carousel-item
+    //-                 .jumbotron(style = "margin-top: 0; margin-bottom: 0; ")
+    //-                     h1.display-4 #{n.title}
+    //-                     p.lead
+    //-                         | #{n.datetime}
+    //-                     hr.my-4
+    //-                     p 
+    //-                         | #{n.content} 
+    //-                     hr
+    //-                     a.btn.btn-primary(href='../generalmessage', role='button') Add
+
+    //- a.carousel-control-prev(href='#carouselJumbotron', role='button', data-slide='prev')
+    //-     span.carousel-control-prev-icon(aria-hidden='true')
+    //-     span.sr-only Previous
+    //- a.carousel-control-next(href='#carouselJumbotron', role='button', data-slide='next')
+    //-     span.carousel-control-next-icon(aria-hidden='true')
+    //-     span.sr-only Next  
+
+
+  .bg-color-important  
+    .container-fluid(style = "height:300px;   margin-top:0;")
+        br
+        br
+        center
+            img(src = '/stylesheets/sunglasses.png' style="width:30px;height:30px;"  )
+        .p3.text-xl-center(style = 'font-size: 2.4rem; font-weight: bold') Situation Information
+        .p3.text-xl-center(style = 'font-size: 1.3rem; font-weight: normal') Singapore is a safe country. Let's keep it that way
+        .p3.text-xl-center(style = 'font-size: 1.3rem; font-weight: normal') It is important to be aware of our surroundings, and be mindful of potential bad actors.
+        br
+        .p3.text-sm-center(style = 'font-size: 1.1rem; font-weight: light') Let's do our part!
+
+      
+  .container-fluid(style = "background-image:linear-gradient(rgba(52, 58, 64, 0.3), rgba(52, 58, 64, 0.3)), url('/stylesheets/guns3.jpeg'); background-size: 100% 100%; height: 1080px; margin-top:0; width:100%; margin-right:0 !important; margin-left:0 !important;  ")  
+     br
+     br
+     br
+     br
+     br
+     br
+     br
+     .container
+        
+            
+        .card.text-white.bg-darker.mb-3.text-center(style='width: 100%;  ;')
+                    .card-body
+                        .card-header    
+                            h5.card-title Situation Information 
+                        #map
+                        //- p.card-text
+                        //- | Testing 
+
+            
+        #carouselExampleSlidesOnly.carousel.slide(data-ride='carousel;')
+                    .carousel-inner
+                        each n in terroristad
+                            .carousel-item
+                                .card.text-white.bg-darker2.cmb-3.text-center(style='width: rem;  ; border:none;')
+                                    .card-body
+                                        h5.card-title #{n.cardtitle}
+                                        h6.card-subtitle.mb-2.text-light #{n.title}
+                                        p.card-text #{n.content}
+                            
+                    a.carousel-control-prev(href='#carouselExampleSlidesOnly', role='button', data-slide='prev')
+                        span.carousel-control-prev-icon(aria-hidden='true')
+                        span.sr-only Previous
+                    a.carousel-control-next(href='#carouselExampleSlidesOnly', role='button', data-slide='next')
+                        span.carousel-control-next-icon(aria-hidden='true')
+                        span.sr-only Next
+    
+         
+        .jumbotron( style= "background-size: 100% 100%;background-image:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/stylesheets/jumbo.jpg'); border-radius: 8px;")
+            .container(style="filter: brightness(150%);")
+                h1.display-4(style = "color:rgb(255, 255, 255);") Saw something suspicious?
+                p.lead(style = "color:rgb(255, 255, 255);") Be sure that you are right.
+                a.btn.btn-primary.btn-sm(href='https://www.theguardian.com/uk-news/2017/jun/10/how-to-detect-potential-terrorist-heed-warnings-of-family-and-friends', role='button') Learn more
+
+
+ 
+  
+  .container-fluid(style = "height:300px; background:rgb(247, 249, 252,0.3); margin-top:0;")
+      br
+      br
+      center
+        img(src = '/stylesheets/cloud.png' style="width:30px;height:30px;"  )
+      .p3.text-xl-center(style = 'font-size: 2.4rem; font-weight: bold') Haze Information
+      .p3.text-xl-center(style = 'font-size: 1.3rem; font-weight: normal') Our air is clean throughout (most) of the year.
+      .p3.text-xl-center(style = 'font-size: 1.3rem; font-weight: normal') For times whereby it is not.. It is important to be aware!
+      br   
+      .p3.text-sm-center(style = 'font-size: 1.1rem; font-weight: light') Let's do our part!
+
+  
+  .container-fluid(style = "background-image:linear-gradient(rgba(52, 58, 64, 0.3), rgba(52, 58, 64, 0.3)), url('/stylesheets/haze.jpeg'); background-size: 100% 100%; min-height: 1280px; margin-top:0; width:100%; margin-right:0 !important; margin-left:0 !important;  ")  
+    br
+    br
+    br
+    br
+    br
+    br
+    br
+    #carouselJumbotronPSI.carousel.slide(data-ride='carousel')
+        ol.carousel-indicators
+            li.active(data-target='#carouselJumbotronPSI', data-slide-to='0')
+            li(data-target='#carouselJumbotronPSI', data-slide-to='1')
+            li(data-target='#carouselJumbotronPSI', data-slide-to='2')
+            li(data-target='#carouselJumbotronPSI', data-slide-to='3')
+            li(data-target='#carouselJumbotronPSI', data-slide-to='4')
+        .carousel-inner 
+            .carousel-item.active
+                .centering
+                    .alert#northPSI.alert-success(role='alert' value = psin)
+                        h4.alert-heading PSI level for North region is currently #{psin}
+                        p#northPSItext The current level is withnin GOOD range. No special precautions are required.
+                        hr
+                        p.mb-0 Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis
+            .carousel-item
+                .centering
+                    .alert#southPSI.alert-success(role='alert' value = psis)
+                        h4.alert-heading PSI level for South region is currently #{psis}
+                        p#southPSItext The current level is withnin GOOD range. No special precautions are required.
+                        hr
+                        p.mb-0 Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis
+            .carousel-item
+                .centering
+                    .alert#eastPSI.alert-success(role='alert' value = psie)
+                        h4.alert-heading PSI level for East region is currently #{psie}
+                        p#eastPSItext The current level is withnin GOOD range. No special precautions are required.
+                        hr
+                        p.mb-0 Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis
+            .carousel-item
+                .centering
+                    .alert#westPSI.alert-success(role='alert' value = psiw)
+                        h4.alert-heading PSI level for West region is currently #{psiw}
+                        p#westPSItext The current level is withnin GOOD range. No special precautions are required.
+                        hr
+                        p.mb-0 Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis   
+            .carousel-item
+                .centering
+                    .alert#centralPSI.alert-success(role='alert' value = psic)
+                        h4.alert-heading PSI level for Central region is currently #{psic}
+                        p#centralPSItext The current level is withnin GOOD range. No special precautions are required.
+                        hr
+                        p.mb-0 Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis                     
+            a.carousel-control-prev(href='#carouselJumbotronPSI', role='button', data-slide='prev')
+                    span.carousel-control-prev-icon(aria-hidden='true')
+                    span.sr-only Previous
+            a.carousel-control-next(href='#carouselJumbotronPSI', role='button', data-slide='next')
+                    span.carousel-control-next-icon(aria-hidden='true')
+                    span.sr-only Next
+        br
+
+  
+        //- .row
+        //-     .col-sm
+        //-         .card.text-white.bg-darker.mb-3(style='width: 38rem; min-height: 500px;')
+        //-             .card-body
+        //-                 #map2
+        //-                 p
+        //-                 h5.card-title Haze Information
+        //-                 h6.card-subtitle.mb-2 Shows haze affected area
+
+        //-     .col-sm
+        //-         #carouselExampleSlidesOnly2.carousel.slide(data-ride='carousel' )
+        //-             .carousel-inner
+        //-                 each n in hazead
+        //-                     .carousel-item
+        //-                         .card.text-white.bg-darker2.mb-3(style='width: rem; min-height: 500px; border :none')
+                                   
+        //-                             .card-body
+        //-                                 h5.card-title #{n.cardtitle}
+        //-                                 h6.card-subtitle.mb-2 #{n.title}
+        //-                                 p.card-text #{n.content}
+
+
+
+    .container
+        
+           
+        .card.text-white.bg-darker.mb-3.text-center(style='width: 100%;')
+                    .card-body
+                        .card-header 
+                            h5.card-title Haze Information
+                        #map2 
+
+            
+        #carouselExampleSlidesOnly2.carousel.slide(data-ride='carousel' )
+                    .carousel-inner
+                        each n in hazead
+                            .carousel-item
+                                .card.text-white.bg-darker2.mb-3.text-center(style='width: rem; border : none')  
+                                    .card-body
+                                        h5.card-title #{n.cardtitle}
+                                        h6.card-subtitle.mb-2 #{n.title}
+                                        p.card-text #{n.content}
+
+                    a.carousel-control-prev(href='#carouselExampleSlidesOnly2', role='button', data-slide='prev')
+                        span.carousel-control-prev-icon(aria-hidden='true')
+                        span.sr-only Previous
+                    a.carousel-control-next(href='#carouselExampleSlidesOnly2', role='button', data-slide='next')
+                        span.carousel-control-next-icon(aria-hidden='true')
+                        span.sr-only Next
+
+ 
+        .jumbotron(style = "background-image:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/stylesheets/jumbo3.jpg'); background-size: 100% 100%; border-radius: 8px;")
+            .container
+                h1.display-4(style = "color:rgb(255, 255, 255);") Worried about the haze?
+                p.lead(style = "color:rgb(255, 255, 255);") You do not need to be, if you are well prepared.
+                a.btn.btn-primary.btn-sm(href='https://www.healthhub.sg/live-healthy/1079/how-to-protect-yourself-against-haze', role='button') Learn more
+
+    
+
+    // start of DENGUE PSI
+
+  .container-fluid(style = "height:300px; background:rgb(247, 249, 252,0.3); margin-top:0;")
+      br
+      br
+      center
+        img(src = '/stylesheets/fly.png' style="width:30px;height:30px;"  )
+      .p3.text-xl-center(style = 'font-size: 2.4rem; font-weight: bold') Dengue Information
+      .p3.text-xl-center(style = 'font-size: 1.3rem; font-weight: normal') Dengue kills, so don't go near it.
+      .p3.text-xl-center(style = 'font-size: 1.3rem; font-weight: normal') With information, comes great awareness.
+      br
+      .p3.text-sm-center(style = 'font-size: 1.1rem; font-weight: light') Let's do our part!
+
+
+  .container-fluid(style = "background-image:linear-gradient(rgba(52, 58, 64, 0.3), rgba(52, 58, 64, 0.3)), url('/stylesheets/forest.jpeg'); background-size: 100% 100%; height:auto; min-height: 1080px; margin-top:0; width:100%; margin-right:0 !important; margin-left:0 !important;  ")  
+    br
+    br
+    br
+    br
+    br
+    br
+    .container
+
+        .card.text-white.bg-darker.mb-3.text-center(style='width: 100; ')
+                    .card-body
+                        .card-header
+                            h5.card-title Dengue Information
+
+                        #map3 
+
+
+        #carouselExampleSlidesOnly3.carousel.slide(data-ride='carousel' )
+                    .carousel-inner
+                        each n in denguead
+                            .carousel-item
+                                .card.text-white.bg-darker2.mb-3.text-center(style='width: rem;  border:none')
+                                   
+                                    .card-body
+                                    
+                                        h5.card-title #{n.cardtitle}
+                                        h6.card-subtitle.mb-2 #{n.title}
+                                        p.card-text #{n.content}
+
+                    a.carousel-control-prev(href='#carouselExampleSlidesOnly3', role='button', data-slide='prev')
+                        span.carousel-control-prev-icon(aria-hidden='true')
+                        span.sr-only Previous
+                    a.carousel-control-next(href='#carouselExampleSlidesOnly3', role='button', data-slide='next')
+                        span.carousel-control-next-icon(aria-hidden='true')
+                        span.sr-only Next
+
+                
+
+        .jumbotron(style = "background-image:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/stylesheets/jumbo2.jpg'); background-size: 100% 100%; border-radius: 8px; ")
+            .container
+                h1.display-4(style = "color:rgb(255, 255, 255);") Dengue, or Dengued?
+                p.lead(style = "color:rgb(255, 255, 255);") Let it be a thing of the past.
+                a.btn.btn-primary.btn-sm(href='https://www.healthxchange.sg/head-neck/brain-nervous-system/how-protect-your-home-from-dengue-mosquitos', role='button') Learn more
+
+  
+    script.
+        
+        var northPSI = document.getElementById('northPSI');
+        var southPSI = document.getElementById('southPSI');
+        var eastPSI = document.getElementById('eastPSI');
+        var westPSI = document.getElementById('westPSI');
+        var centralPSI = document.getElementById('centralPSI');
+
+        var northPSIvalue = '!{psin}';
+        var southPSIvalue = '!{psis}';
+        var eastPSIvalue =  '!{psie}';
+        var westPSIvalue = '!{psiw}';
+        var centralPSIvalue = '!{psic}';
+
+        if(northPSIvalue > 50 && northPSIvalue < 101){
+
+            northPSI.classList.remove('alert-success');
+            northPSI.classList.add('alert-primary');    
+            document.getElementById('northPSItext').textContent = "The current level is withnin MODERATE range. No special precautions are required.";
+            
+
+        }
+        
+        else if (northPSIvalue > 100 && northPSIvalue < 201){
+
+            northPSI.classList.remove('alert-success');
+            northPSI.classList.add('alert-warning');
+            document.getElementById('northPSItext').textContent = "The current level is withnin UNHEALTHY range. Take extra care in outdoor activities.";
+
+
+        }
+ 
+        else if (northPSIvalue > 200 && northPSIvalue < 301){
+
+            northPSI.classList.remove('alert-success');
+            northPSI.classList.add('alert-danger');
+            document.getElementById('northPSItext').textContent = "The current level is withnin VERY UNHEALTHY range. Avoid prelonged outdoor activities.";
+
+        }
+
+        else if (northPSIvalue > 300){
+
+            northPSI.classList.remove('alert-success');
+            northPSI.classList.add('alert-dark');
+            document.getElementById('northPSItext').textContent = "The current level is withnin HAZARDOUS range. Avoid outdoor activities if possible.";
+
+
+        }
+
+        if(southPSIvalue > 50 && southPSIvalue < 101){
+
+            southPSI.classList.remove('alert-success');
+            southPSI.classList.add('alert-primary');
+            document.getElementById('southPSItext').textContent = "The current level is withnin MODERATE range. No special precautions are required.";
+
+
+        }
+        
+        else if (southPSIvalue > 100 && southPSIvalue < 201){
+
+            southPSI.classList.remove('alert-success');
+            southPSI.classList.add('alert-warning');
+            document.getElementById('southPSItext').textContent = "The current level is withnin UNHEALTHY range. Take extra care in outdoor activities.";
+
+        }
+ 
+        else if (southPSIvalue > 200 && southPSIvalue < 301){
+
+            southPSI.classList.remove('alert-success');
+            southPSI.classList.add('alert-danger');
+            document.getElementById('southPSItext').textContent = "The current level is withnin VERY UNHEALTHY range. Avoid prelonged outdoor activities.";
+
+        }
+
+        else if (southPSIvalue > 300){
+
+            southPSI.classList.remove('alert-success');
+            southPSI.classList.add('alert-dark');
+            document.getElementById('southPSItext').textContent = "The current level is withnin HAZARDOUS range. Avoid outdoor activities if possible.";
+
+        }
+
+        if(eastPSIvalue > 50 && eastPSIvalue < 101){
+
+            eastPSI.classList.remove('alert-success');
+            eastPSI.classList.add('alert-primary');
+            document.getElementById('eastPSItext').textContent = "The current level is withnin MODERATE range. No special precautions are required.";
+
+        }
+        
+        else if (eastPSIvalue > 100 && eastPSIvalue < 201){
+
+            eastPSI.classList.remove('alert-success');
+            eastPSI.classList.add('alert-warning');
+            document.getElementById('eastPSItext').textContent = "The current level is withnin UNHEALTHY range. Take extra care in outdoor activities.";
+
+        }
+ 
+        else if (eastPSIvalue > 200 && eastPSIvalue < 301){
+
+            eastPSI.classList.remove('alert-success');
+            eastPSI.classList.add('alert-danger');
+            document.getElementById('eastPSItext').textContent = "The current level is withnin VERY UNHEALTHY range. Avoid prelonged outdoor activities.";
+
+        }
+
+        else if (eastPSIvalue > 300){
+
+            eastPSI.classList.remove('alert-success');
+            eastPSI.classList.add('alert-dark');
+            document.getElementById('eastPSItext').textContent = "The current level is withnin HAZARDOUS range. Avoid outdoor activities if possible.";
+
+        }
+
+        if(westPSIvalue > 50 && westPSIvalue < 101){
+
+            westPSI.classList.remove('alert-success');
+            westPSI.classList.add('alert-primary');
+            document.getElementById('westPSItext').textContent = "The current level is withnin MODERATE range. No special precautions are required.";
+
+        }
+        
+        else if (westPSIvalue > 100 && westPSIvalue < 201){
+
+            westPSI.classList.remove('alert-success');
+            westPSI.classList.add('alert-warning');
+            document.getElementById('westPSItext').textContent = "The current level is withnin UNHEALTHY range. Take extra care in outdoor activities.";
+
+        }
+ 
+        else if (westPSIvalue > 200 && westPSIvalue < 301){
+
+            westPSI.classList.remove('alert-success');
+            westPSI.classList.add('alert-danger');
+            document.getElementById('westPSItext').textContent = "The current level is withnin VERY UNHEALTHY range. Avoid prelonged outdoor activities.";
+
+        }
+
+        else if (westPSIvalue > 300){
+
+            westPSI.classList.remove('alert-success');
+            westPSI.classList.add('alert-dark');
+            document.getElementById('westPSItext').textContent = "The current level is withnin HAZARDOUS range. Avoid outdoor activities if possible.";
+
+        }
+
+        if(centralPSIvalue > 50 && centralPSIvalue < 101){
+
+            centralPSI.classList.remove('alert-success');
+            centralPSI.classList.add('alert-primary');
+            document.getElementById('centralPSItext').textContent = "The current level is withnin MODERATE range. No special precautions are required.";
+
+        }
+        
+        else if (centralPSIvalue > 100 && centralPSIvalue < 201){
+
+            centralPSI.classList.remove('alert-success');
+            centralPSI.classList.add('alert-warning');
+            document.getElementById('centralPSItext').textContent = "The current level is withnin UNHEALTHY range. Take extra care in outdoor activities.";
+
+        }
+ 
+        else if (centralPSIvalue > 200 && centralPSIvalue < 301){
+
+            centralPSI.classList.remove('alert-success');
+            centralPSI.classList.add('alert-danger');
+            document.getElementById('centralPSItext').textContent = "The current level is withnin VERY UNHEALTHY range. Avoid prelonged outdoor activities.";
+
+        }
+
+        else if (centralPSIvalue > 300){
+
+            centralPSI.classList.remove('alert-success');
+            centralPSI.classList.add('alert-dark');
+            document.getElementById('centralPSItext').textContent = "The current level is withnin HAZARDOUS range. Avoid outdoor activities if possible.";
+
+        }
+
+
+
+
+
+
+        
+
+
+
+        $(function () {
+            var myNav = document.getElementById('adminNav');
+            myNav.setAttribute('style' , 'background : clear;');
+            myNav.classList.remove('sticky-top');
+            myNav.classList.add('fixed-top');
+
+
+        $(document).scroll(function () {
+            var $nav = $("adminNav");
+            $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+ 
+
+            var myNav = document.getElementById('adminNav');
+ 
+            if(window.scrollY >= 1080*2){
+
+            myNav.setAttribute('style' , 'background : rgb(66, 66, 66);');
+
+
+            }
+            else if(window.scrollY <= 1080*2){
+
+            myNav.setAttribute('style' , 'background : clear;');
+ 
+            }
+
+            if (window.scrollY >= 1080*2 + 300 && window.scrollY < 1080*3 + 300){
+
+            myNav.setAttribute('style' , 'background : clear;');
+
+            }
+            if (window.scrollY >= 1080*3+ 300 && window.scrollY < 1080*3 + 300  + 300){
+
+            myNav.setAttribute('style' , 'background : rgb(66, 66, 66);');
+
+            }
+            if (window.scrollY >= 1080*3 + 300  + 300 && window.scrollY < 1080*3 + 1280 + 300 + 300){
+
+            myNav.setAttribute('style' , 'background : clear;');
+
+            }
+            if (window.scrollY >= 1080*3 + 1280 + 300 + 300 && window.scrollY < 1080*3 + 1280 + 300 + 300){
+
+            myNav.setAttribute('style' , 'background : rgb(66,66,66);');
+
+            }
+            if (window.scrollY >= 1080*3 + 1280 + 300 + 300 +300){
+
+            myNav.setAttribute('style' , 'background : clear;');
+
+            }
+
+
+
+        });
+        });
+        function hello(){
+        
+            alert("hello");
+        
+        }
+
+        
+
+
+        function login(user,pw){
+
+            console.log(user);
+            console.log(pw);
+
+            $.post("/login",
+            {
+                un: user,
+                pw: pw
+            },
+            function(data){
+
+                console.log(data);
+
+            });
+        }
+
+        var map;
+        var map2;
+        var map3;
+
+        var num;
+        var addressList = [];
+
+        // Latlng holders for PSI
+        var sgNorth;
+        var sgSouth;
+        var sgEast;
+        var sgWest;
+        var sgCentral;
+
+        var infoWindow;
+        var geocoder;
+
+        // Checks Incident Status & Assigns different coloured icons
+        function parseIcon(status){
+            if(status == 1){ // Red
+                return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            }else if(status == 2){ // Yellow 
+                return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+            }else if(status == 3){ // Green
+                return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            }else{
+                // default icon
+            }
+        }
+
+        // Checks if object is empty
+        function isEmpty(obj){
+            for(var key in obj){
+                if(obj.hasOwnProperty(key)){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Checks if PSI in the 5 regions are above 200
+        // Plot Google Maps Circle if psi > 200
+        function checkPSI(psiValue, region){
+            switch(region){
+                case "north": 
+                    if(northPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map2,
+                            center: sgNorth,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map2.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore North</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgNorth.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgNorth.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${northPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map2, circleMarker);
+                        });
+                    }
+                    break;
+                case "south":
+                    if(southPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map2,
+                            center: sgSouth,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map2.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore South</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgSouth.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgSouth.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${southPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map2, circleMarker);
+                        });
+                    }
+                    break;
+                case "east":
+                    if(eastPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map2,
+                            center: sgEast,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map2.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore East</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgEast.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgEast.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${eastPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map2, circleMarker);
+                        });
+                    }
+                    break;
+                case "west":
+                    if(westPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map2,
+                            center: sgWest,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map2.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore West</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgWest.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgWest.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${westPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map2, circleMarker);
+                        });
+                    }
+                    break;
+                case "central":
+                    if(centralPSIvalue > 200){
+                        var circleMarker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map2,
+                            center: sgCentral,
+                            radius: 5000
+                        });
+
+                        circleMarker.addListener('click', function(){
+                            map2.panTo(circleMarker.center);
+                            infoWindow.setPosition(circleMarker.center);
+                            var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>Singapore Central</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sgCentral.lat()}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sgCentral.lng()}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>PSI = ${centralPSIvalue}</i>
+                                            </div>
+                                            `;
+
+                            infoWindow.setContent(contentString);
+                            infoWindow.open(map2, circleMarker);
+                        });
+                    }
+                    break;
+            }
+        }   
+
+        // Initialize all data from DB
+        function initVars(){
+            var initialString = "#{db_Data}";
+            var firstSplit = initialString.split('+');
+            var arrayCounter = 0;
+            firstSplit.forEach(function(element){
+                var secondSplit = element.split(',');
+                var locationDetails = {};
+                locationDetails.address = secondSplit[0];
+                locationDetails.lat = secondSplit[1];
+                locationDetails.lng = secondSplit[2];
+                locationDetails.type = secondSplit[3];
+                locationDetails.status = secondSplit[4];
+                locationDetails.title = secondSplit[5];
+                addressList.push(locationDetails);
+                arrayCounter++;
+            });
+            num = addressList.length;
+
+            sgNorth = new google.maps.LatLng("1.4235972146461064", "103.81115050336939");
+            sgSouth = new google.maps.LatLng("1.2906999603795664", "103.82660002729517");
+            sgEast = new google.maps.LatLng("1.3450679056771975", "103.93165678999048");
+            sgWest = new google.maps.LatLng("1.3495984963255512", "103.71467680952173");
+            sgCentral = new google.maps.LatLng("1.3526188923868658", "103.82488341352564");
+            
+            geocoder = new google.maps.Geocoder;
+            infoWindow = new google.maps.InfoWindow;
+        }
+
+        // Method accessed on API callback
+        function initMap() {
+            initVars();
+            initIncidentMap();
+            initHazeMap();
+            initDengueMap();
+        }
+
+        // Initialize Incidents Map
+        function initIncidentMap(){
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 1.352083, lng: 103.819836 }, // LatLng of Singapore
+                zoom: 10
+            });
+
+            map.addListener('click', function(){
+                infoWindow.close();
+            });
+
+            addressList.forEach(function(sc) {
+                if(sc.type.match('inreport')){
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(sc.lat,sc.lng),
+                        map: map,
+                        title: sc.address,
+                        animation: google.maps.Animation.DROP,
+                        icon: {
+                            url: parseIcon(sc.status),
+                            scaledSized: new google.maps.Size(23, 33)
+                        }
+                    });
+
+                    marker.addListener('click', function(){
+                        map.panTo(marker.position);
+                        var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>${sc.address}</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sc.lat}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sc.lng}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>${sc.title}</i>
+                                            </div>
+                                            `;
+
+                        infoWindow.setContent(contentString);
+                        infoWindow.open(map, marker);
+                    });
+                }
+            });
+        }
+
+        // Initialize Haze Map
+        function initHazeMap(){
+            map2 = new google.maps.Map(document.getElementById('map2'), {
+                center: { lat: 1.352083, lng: 103.819836 }, // LatLng of Singapore
+                zoom: 10
+            });
+
+            map2.addListener('click', function(){
+                infoWindow.close();
+            });
+
+            checkPSI(northPSIvalue, "north");
+            checkPSI(southPSIvalue, "south");
+            checkPSI(eastPSIvalue, "east");
+            checkPSI(westPSIvalue, "west");
+            checkPSI(centralPSIvalue, "central");
+        }
+
+        $(document).ready(function () {
+            $('#carouselExampleSlidesOnly').find('.carousel-item').first().addClass('active');
+        });
+
+        $(document).ready(function () {
+            $('#carouselExampleSlidesOnly2').find('.carousel-item').first().addClass('active');
+        });
+
+        $(document).ready(function () {
+            $('#carouselExampleSlidesOnly3').find('.carousel-item').first().addClass('active');
+        });
+
+        $(document).ready(function () {
+            $('#carouselJumbotron').find('.carousel-item').first().addClass('active');
+        });
+        
+        // Initialize Dengue Map
+        function initDengueMap(){
+            map3 = new google.maps.Map(document.getElementById('map3'), {
+                center: { lat: 1.352083, lng: 103.819836 }, // LatLng of Singapore
+                zoom: 10
+            });
+
+            map3.addListener('click', function(){
+                infoWindow.close();
+            });
+
+            addressList.forEach(function(sc) {
+                if(sc.type.match('dengue')){
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(sc.lat,sc.lng),
+                        map: map3,
+                        title: sc.address,
+                        animation: google.maps.Animation.DROP,
+                        icon: {
+                            url: "assets/img/maps/mozzie.png",
+                            scaledSized: new google.maps.Size(23, 33)
+                        }
+                    });
+
+                    marker.addListener('click', function(){
+                        map3.panTo(marker.position);
+                        var contentString = `<div id="content"> 
+                                                <h6 style=color:black>Location:</h6> <i style=color:black>${sc.address}</i>    
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lat:</h6> <i style=color:black>${sc.lat}</i> 
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Lng:</h6> <i style=color:black>${sc.lng}</i>
+                                                <br/>
+                                                <br/>
+                                                <h6 style=color:black>Title:</h6> <i style=color:black>${sc.title}</i>
+                                            </div>
+                                            `;
+
+                        infoWindow.setContent(contentString);
+                        infoWindow.open(map3, marker);
+                    });     
+                }
+            });
+        }
+
+    // API Call
+    script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdPOsbD2Dg8qse475kMZjuhmEWz0wcp9c&callback=initMap")
+

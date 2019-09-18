@@ -1,0 +1,29 @@
+extends layoutAdmin
+
+block content
+
+
+
+  br
+  br
+
+  .bg-color-container
+    .container 
+      h1 Send Notification
+      hr
+      t1 Send Notification here
+      form#formId
+        hr
+        .form-group.col-md-2
+        label(for='agents') List of Agencies
+        select#agents.form-control
+            option(selected='') Choose...
+                each ar in arr
+                    option(value=ar) #{ar}
+        .form-group
+            label(for='TextArea') Contents
+            textarea#TextArea.form-control(rows='5')
+
+        button.btn.btn-primary(type='submit') Submit
+
+ 

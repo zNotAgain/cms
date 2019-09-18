@@ -1,0 +1,20 @@
+extends layoutAdmin
+
+block content
+
+
+
+  br
+  br
+
+  .bg-color-container
+      h1 Send out a tweet
+      form#form-tweet-publish(role='form', method="POST", action='../tweet/')
+        hr
+        .form-group
+            label(for='TextArea') Content
+            textarea#TextArea.form-control(rows='5', name='content')
+
+        button.btn.btn-primary(type='submit') Submit
+
+ 

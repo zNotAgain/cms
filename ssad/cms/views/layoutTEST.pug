@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    title= title
+    script(src="http://code.jquery.com/jquery-2.1.0.min.js")
+    script(src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js")
+    link(href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", rel="stylesheet")
+        
+    
+   
+    
+  nav.navbar.fixed-top.navbar-expand-lg.navbar-dark.bg-dark
+    #navbarNavAltMarkup.collapse.navbar-collapse
+      a.navbar-brand(href='#')
+        img(src="/stylesheets/logo.png", alt='', width='35', height='35')
+
+
+      .navbar-nav
+        a.navbar-brand(href='callcenter')
+          | Home 
+          span.sr-only (current)
+          
+        a.nav-item.nav-link(href='inc') 
+          | Incident Report
+          span.sr-only (current)
+        a.nav-item.nav-link(href='sendn') 
+          | Notification
+          span.sr-only (current)
+        a.nav-item.nav-link(href='updatesit') 
+          | Situation
+          span.sr-only (current)
+        a.nav-item.nav-link(href='map') 
+          | Maps
+          span.sr-only (current)
+        a.nav-item.nav-link(href='javascript.login()') 
+          | Social Media
+          span.sr-only (current)
+
+    .navbar-nav
+      a.nav-item.nav-link Hello User!
+      a.navbar-brand(href='')
+        img(src="/stylesheets/user.png", alt='', width='35', height='35')
+
+  br
+  br
+
+  body
+    block content

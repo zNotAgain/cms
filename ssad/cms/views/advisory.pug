@@ -1,0 +1,29 @@
+extends layoutAdmin
+
+block content
+
+
+
+  br
+  br
+
+  .bg-color-container
+      h1 Add Advisory
+      hr
+      t1 Add a new advisory here
+      form#formId
+        hr
+        .form-group
+            label(for='headerTitle') Header title
+            input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', placeholder='Title', name='title')
+        .form-group
+            label(for='headerTitle') Card title
+            input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', placeholder='Title', name='title')
+        
+        .form-group
+            label(for='TextArea') Contents
+            textarea#TextArea.form-control(rows='5')
+
+        button.btn.btn-primary(type='submit') Submit
+
+ 

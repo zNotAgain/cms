@@ -1,0 +1,64 @@
+extends layoutAdmin
+
+block content
+    .content
+        // START JUMBOTRON
+        //.jumbotron(data-pages='parallax')
+        .container-fluid.container-fixed-lg.sm-p-l-0.sm-p-r-0
+            .inner
+        // END JUMBOTRON
+        // START CONTAINER FLUID
+        <div class = "bg-color-container4">
+            <!-- START card -->
+            <div class="card card-transparent">
+              <div class="card-header ">                
+                <h5 class="card-title">#{page.name}</h5>
+              </div>
+
+                <div class="clearfix"></div>
+              </div>
+              <div class="card-block">
+                    form#form-service-edit(role='form', method="POST", action='../account/create')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Username
+                                    input#name.form-control(type='text', name='un', placeholder='UN', required='')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Password
+                                    input#name.form-control(type='text', name='pw', placeholder='PW', required='')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Name
+                                    input#name.form-control(type='text', name='name', placeholder='name', required='')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Email
+                                    input#name.form-control(type='text', name='email', placeholder='email', required='')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Contact Number
+                                    input#name.form-control(type='text', name='contact_no', placeholder='contact_no', required='')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Role
+                                    select.form-control.form-control-sm(name = "role_name",data-init-plugin='select2', tabindex='-1', aria-hidden='true', placeholder='select role' )
+                                            each row in data
+                                                option(value=row.role_name) #{row.role_name}
+                        .row.align-items-end
+                            .text-right.col-sm-12 
+                                div
+                                    a.button.btn.btn(href='/account') Cancel
+                                div
+                                    a
+                                        button.btn.btn-success(type='submit', style='margin-left: 39%;') Create
+              </div>
+            </div>
+            <!-- END card -->
+        </div>

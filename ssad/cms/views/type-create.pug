@@ -1,0 +1,33 @@
+extends layoutAdmin
+
+block content
+    .content
+        // START JUMBOTRON
+        //.jumbotron(data-pages='parallax')
+        .container-fluid.container-fixed-lg.sm-p-l-0.sm-p-r-0
+            .inner
+        // END JUMBOTRON
+        // START CONTAINER FLUID
+        <div class = "bg-color-container4">
+            <!-- START card -->
+            <div class="card card-transparent">
+              <div class="card-header ">                
+                <h5 class="card-title">#{page.name}</h5>
+              </div>
+
+                <div class="clearfix"></div>
+              </div>
+              <div class="card-block">
+                    form#form-type-edit(role='form', method="POST", action='../type/create')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Type Name
+                                    input#name.form-control(type='text', name='type_name', placeholder='insert new name', required='')
+                        .row.align-items-end
+                            .text-right.col-sm-12 
+                                button.btn.btn-success(type='submit') Create
+              </div>
+            </div>
+            <!-- END card -->
+        </div>

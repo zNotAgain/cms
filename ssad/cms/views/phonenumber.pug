@@ -1,0 +1,68 @@
+extends layoutAdmin
+
+mixin row(data)
+    td.v-align-middle
+        p #{data.person_id}
+    td.v-align-middle
+        p #{data.person_name}
+    td.v-align-middle
+        p #{data.contactno}
+    
+    td.v-align-middle
+        <div class="btn-group dropdown-default">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <span class="text-master">Action</span></a>
+                <ul class="dropdown-menu ">
+                    <li><a class="dropdown-item" href="/phonenumbers/edit?person_id=#{data.person_id}">Edit</a></li>                   
+                </ul>
+        </div>    
+      
+
+block content
+ 
+    .content
+    
+        // START JUMBOTRON
+        //.jumbotron(data-pages='parallax')
+        .container-fluid.container-fixed-lg.sm-p-l-0.sm-p-r-0
+            .inner
+        // END JUMBOTRON
+        // START CONTAINER FLUID
+        br
+        br
+        <div class = "bg-color-container3">
+            <!-- START card -->
+            <div class="card card-transparent">
+                <div class="card-header ">
+                    <h5 class="card-title">#{page.name}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <a href="/phonenumbers/create" class="btn btn-success" tabindex="0" style="margin-left: 90%;">Add Contact</a>
+                    //- <div class="card-title">SITUATION LIST </div>
+                    //- <div class="clearfix"></div>
+                </div>
+                <div class="card-block">
+                    <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer">
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            thead
+                                tr(role='row')
+                                    th.sorting_asc(tabindex='0', aria-controls='tableWithSearch', rowspan='1', colspan='1', aria-sort='ascending', aria-label='Title: activate to sort column descending') Person ID
+                                    th.sorting(tabindex='0', aria-controls='tableWithSearch', rowspan='1', colspan='1', aria-label='Last Update: activate to sort column ascending', ) Person Name
+                                    th.sorting(tabindex='0', aria-controls='tableWithSearch', rowspan='1', colspan='1', aria-label='Last Update: activate to sort column ascending', ) Contact Number
+                                 
+                            tbody
+                                -var length = 1;
+                                each row in page.data
+                                    if (length % 2==0)
+                                        tr.odd(role='row')
+                                            +row(row)   
+                                        
+                                    else
+                                        tr.even(role='row')
+                                            +row(row)
+                        </table>   
+                    </div>  
+                                      
+                </div>
+ 
+            </div>
+            <!-- END card -->
+        </div>

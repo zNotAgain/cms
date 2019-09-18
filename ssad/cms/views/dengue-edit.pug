@@ -1,0 +1,171 @@
+extends layoutAdmin
+
+block content
+
+
+    style.
+        #map {
+            width: 100%;
+            height:350px;
+        }
+
+        
+    .content
+        // START JUMBOTRON
+        //.jumbotron(data-pages='parallax')
+        .container-fluid.container-fixed-lg.sm-p-l-0.sm-p-r-0
+            .inner
+        // END JUMBOTRON
+        // START CONTAINER FLUID
+        <div class = "bg-color-container4">
+            <!-- START card -->
+            <div class="card card-transparent">
+              <div class="card-header ">                
+                <h5 class="card-title">#{page.name}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Edit Dengue Info</h6>
+              </div>
+
+                <div class="clearfix"></div>
+              </div>
+              <div class="card-block">
+                    form#form-agency-edit(role='form', method="POST", action='../dengueedit')
+                        <input type="hidden" name="dengue_id" value= #{data.dengue_id}>
+                        br
+                        label(for='Location') Location
+                        #map
+                        br
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Address
+                                    input#form-address.form-control( name='address', placeholder='Change address', required='', value= data.address, onkeypress="alert('Please Click on Map to edit'); return false;")
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Lat
+                                    input#form-lat.form-control( name='lat', placeholder='Change address', required='', value= data.lat, onkeypress="alert('Please Click on Map to edit'); return false;")
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Lng
+                                    input#form-lng.form-control( name='lng', placeholder='Change address', required='', value= data.lng, onkeypress="alert('Please Click on Map to edit'); return false;")
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Note
+                                    input#name.form-control( name='notes', placeholder='Change address', required='', value= data.notes)
+                        
+
+                        
+
+                        .row.align-items-end
+                            .text-right.col-sm-12 
+
+                            div
+                                a.button.btn.btn(href='/dengue-list') Cancel
+                            div
+                                a
+                                    button.btn.btn-success(type='submit', style='margin-left: 39%;') Update
+
+                                
+                        
+
+                            
+                        
+                                    
+              </div>
+            </div>
+            <!-- END card -->
+        </div>
+
+    script.
+
+        var map;
+        var markers = [];
+        var currentMarker = {};
+        var geocoder;
+        var infoWindow;
+        var form_Address = document.getElementById('form-address');
+        var form_Lat = document.getElementById('form-lat');
+        var form_Lng = document.getElementById('form-lng');
+
+        // Method accessed on API callback
+        function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 1.352083, lng: 103.819836 }, // LatLng of Singapore
+                    zoom: 11.5
+                });    
+
+                map.addListener('click', function(e){
+                    parseMarker(e.latLng, map);
+                });   
+
+                geocoder = new google.maps.Geocoder;
+                infoWindow = new google.maps.InfoWindow;
+
+        }
+
+        // Checks if another Marker has already been placed on map
+        // If so, remove previous marker and set new one.
+        // Otherwise, just set a new marker
+        function parseMarker(latLng, map){
+            if(isEmpty(currentMarker)){
+                setMarker(latLng, map)
+            }else{
+                removeMarkers();
+                setMarker(latLng, map)
+            }
+        }
+
+        // Sets marker on the map
+        function setMarker(latLng, map){
+            var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+            map.panTo(latLng);
+            markers.push(marker);
+            reverseGeocode(geocoder, map, infoWindow, latLng, marker);
+        }
+
+        // Gets location address based on lat & lng
+        function reverseGeocode(geocoder, map, infowindow, latLng, marker) {
+            geocoder.geocode({'location': latLng}, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        currentMarker.address = results[0].formatted_address.replace(/,/g, '');
+                        currentMarker.lat = latLng.lat();
+                        currentMarker.lng = latLng.lng();
+                        form_Address.value = currentMarker.address;
+                        form_Lat.value = latLng.lat();
+                        form_Lng.value = latLng.lng();
+                    } else {
+                       window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+        // Removes Marker from Map
+        function removeMarkers(){
+            for(var i=0;i<markers.length;i++){
+                markers[i].setMap(null);
+            }
+        }
+
+        // Checks if object is empty
+        function isEmpty(obj){
+            for(var key in obj){
+                if(obj.hasOwnProperty(key)){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    // API Call
+    script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdPOsbD2Dg8qse475kMZjuhmEWz0wcp9c&callback=initMap")
+
+  

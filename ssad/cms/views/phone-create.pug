@@ -1,0 +1,43 @@
+extends layoutAdmin
+
+block content
+    .content
+        // START JUMBOTRON
+        //.jumbotron(data-pages='parallax')
+        .container-fluid.container-fixed-lg.sm-p-l-0.sm-p-r-0
+            .inner
+        // END JUMBOTRON
+        // START CONTAINER FLUID
+        <div class = "bg-color-container4">
+            <!-- START card -->
+            <div class="card card-transparent">
+              <div class="card-header ">                
+                <h5 class="card-title">#{page.name}</h5>
+              </div>
+
+                <div class="clearfix"></div>
+              </div>
+              <div class="card-block">
+                    form#form-service-edit(role='form', method="POST", action='../phonenumbers/create')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Person Name
+                                    input#name.form-control(type='text', name='person_name', placeholder='name', required='')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Contact No
+                                    input#name.form-control(type='text', name='contactno', placeholder='contact number', required='')
+                        
+                        .row.align-items-end
+                            .text-right.col-sm-12 
+                                div
+                                    a.button.btn.btn(href='/phonenumbers') Cancel
+                                div
+                                    a
+                                        button.btn.btn-success(type='submit', style='margin-left: 39%;') Create
+              </div>
+            </div>
+            <!-- END card -->
+        </div>

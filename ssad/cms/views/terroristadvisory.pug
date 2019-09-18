@@ -1,0 +1,29 @@
+extends layoutAdmin
+
+block content
+
+
+
+  br
+  br
+
+  .bg-color-container
+      h1 Add Situation Advisory
+      hr
+      t1 Add a new situation advisory here
+      form#form-terroristad-update(role='form', method="POST", action='../terroristadvisory/')
+        hr
+        .form-group
+            label(for='headerTitle') Header title
+            input#exampleInputEmail1.form-control(type='text', name='cardtitle', aria-describedby='emailHelp', placeholder='Title')
+        .form-group
+            label(for='headerTitle') Card title
+            input#exampleInputEmail1.form-control(type='text', name='title', aria-describedby='emailHelp', placeholder='Title')
+        
+        .form-group
+            label(for='TextArea') Contents
+            textarea#TextArea.form-control(rows='5', name='content')
+
+        button.btn.btn-primary(type='submit') Submit
+
+ 

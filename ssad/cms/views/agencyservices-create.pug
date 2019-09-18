@@ -1,0 +1,44 @@
+extends layoutAdmin
+
+block content
+    .content
+        // START JUMBOTRON
+        //.jumbotron(data-pages='parallax')
+        .container-fluid.container-fixed-lg.sm-p-l-0.sm-p-r-0
+            .inner
+        // END JUMBOTRON
+        // START CONTAINER FLUID
+        <div class = "bg-color-container4">
+            <!-- START card -->
+            <div class="card card-transparent">
+              <div class="card-header ">                
+                <h5 class="card-title">#{page.name}</h5>
+              </div>
+
+                <div class="clearfix"></div>
+              </div>
+              <div class="card-block">
+                    form#form-service-edit(role='form', method="POST", action='../agency/createservice')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Service name
+                                    input#name.form-control(type='text', name='assistance_name', placeholder='name', required='')
+                        .row
+                            .col-sm-6
+                                .form-group.required 
+                                    label.control-label Assistance Provider
+                                    select.form-control.form-control-sm(name = "agency_name",data-init-plugin='select2', tabindex='-1', aria-hidden='true', placeholder='select service provider' )
+                                            each row in arr
+                                                option(value=row.agency_name) #{row.agency_name}
+                        .row.align-items-end
+                            .text-right.col-sm-12 
+                                div
+                                    a.button.btn.btn(href='/agency/agencyassist') Cancel
+                                div
+                                    a
+                                        button.btn.btn-success(type='submit', style='margin-left: 39%;') Create
+              </div>
+            </div>
+            <!-- END card -->
+        </div>

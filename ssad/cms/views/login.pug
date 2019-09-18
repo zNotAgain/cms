@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 Log In
+        form(method='POST' action='/login/login')
+          div.form-group
+            label(for='un') Username
+            input.form-control(type='text' id='un' placeholder='username' name='un')
+          div.form-group
+            label(for='pw') Password
+            input.form-control(type='password' id='pw' placeholder='password' name='pw')
+          button.btn.btn-primary(type='submit') Log in 

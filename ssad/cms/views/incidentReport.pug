@@ -1,0 +1,399 @@
+extends layoutAdmin
+
+block content
+ 
+    script(type='text/javascript', src='https://code.jquery.com/jquery-3.3.1.js')
+
+
+ 
+    style.
+        #map {
+            width: 100%;
+            height:350px;
+        }
+
+    br  
+    br
+    .bg-color-container
+        
+        h1 Incident Report 
+        t1 Submit your incident form here
+        form#form-create-report(role='form', method="POST", action='../inc')
+            hr
+            .form-group
+                label(for='InputTitle') Incident Title
+                input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', placeholder='Enter title', name='title')
+            .form-group
+                label(for='InputName') Reporter Name
+                input#exampleInputPassword1.form-control(type='text', placeholder='Name', name='name')
+                small#emailHelp.form-text.text-muted We'll never share your name with anyone else.
+            .form-group
+                label(for='InputNumber') Contact Number
+                input#exampleInputPassword1.form-control(type='text', placeholder='Contact Number', name='contactno')
+                small#emailHelp.form-text.text-muted We'll never share your number with anyone else.
+
+            .form-group
+                label(for='InputEmail') Email
+                input#exampleInputPassword1.form-control(type='text', placeholder='Email', name='email')
+                small#emailHelp.form-text.text-muted We'll never share your email with anyone else.        
+        
+            label(for='Location') Location
+            #map
+            br
+            input(type='hidden', name='assistance_id', value='', size='0')
+            .form-group
+                label(for='Address') Address
+                input#form-address.form-control(type='text', name='address', placeholder="Please Click on Map...", onkeypress="return false;")
+                br
+                .form-row
+                    .form-group.col-md-5
+                        label(for='Lat') Latitude
+                        input#form-lat.form-control(type='text', name='lat', placeholder="Please Click on Map...", onkeypress="return false;")
+                    .form-group.col-md-5
+                        label(for='Lng') Longitude
+                        input#form-lng.form-control(type='text', name='lng', placeholder="Please Click on Map...", onkeypress="return false;")
+            .form-group
+                label(for='InputIncident') Incident Contents
+                textarea#exampleFormControlTextarea1.form-control(rows='5', name='content')
+            .row
+                .col-sm-6
+                    .form-group.required 
+                        label.control-label List of Assistance 
+                        select#se.form-control.form-control-sm(onchange = "addAssistanceList(document.getElementById('se').value , document.getElementById('se').value)" name = "assistance_name",data-init-plugin='select2', tabindex='-1', aria-hidden='true', placeholder='select assistance type' )
+                                each row in arr
+                                    if(row.assistance_id ==arr.assistance_name)
+                                        option#op1( value=row.assistance_name  selected="selected") #{row.assistance_name}
+
+                                    else
+                                        option#op2( value=row.assistance_name) #{row.assistance_name}
+            ul#assistanceList.list-group
+            br
+            .row
+                .col-sm-6
+                    .form-group.required 
+                        label.control-label Type of Incident
+                        select.form-control.form-control-sm(name = "type_name",data-init-plugin='select2', tabindex='-1', aria-hidden='true', placeholder='select incident type' )
+                                each row in data
+                                    if(row.type_name == type_name)
+                                        option(value=row.type_name , selected="selected") #{row.type_name}
+
+                                    else
+                                        option(value=row.type_name) #{row.type_name}
+            button.btn.btn-primary(type='submit') Submit
+    
+
+        //-   form#formId 
+        //-       hr
+        //-       input(name='incident_type', value='emergency', type='radio')
+        //-       t1   Emergency
+        //-       br
+        //-       input(name='incident_type', value='non_emergency', type='radio')
+        //-       t1  Non Emergency
+        //-       br
+        //-       hr
+        //-       t1  Incident Title
+        //-       br
+        //-       input(name='incident_title', value='Title', type='text')
+        //-       br
+        //-       hr
+        //-       t1  Name Of Reporter
+        //-       br
+        //-       input(name='incident_reporter_name', value='Name', type='text')              
+        //-       br
+        //-       hr
+        //-       t1  Contact Number
+        //-       br   
+        //-       input(name='incident_reporter_Contact_Number', value='Number', type='text')           
+        //-       br
+        //-       hr
+        //-       t1  Location
+        //-       br  
+        //-       input(name='incident_Location', value='Address', type='text')      
+        //-       br
+        //-       hr
+        //-       t1  E-Mail
+        //-       br
+        //-       input(name='incident_reporter_Email', value='Email', type='text') 
+        //-       br
+        //-       hr
+        //-       textarea(rows='4', cols='50')
+        //-       br
+        //-       hr
+        //-       | Agencies  
+        //-       select#agents(name='Agencies')
+        //-           option(value='volvo') Volvo
+        //-           option(value='saab') Saab
+        //-           option(value='fiat') Fiat
+        //-           option(value='audi') Audi
+        //-       br
+            
+
+    
+
+                
+        //-   button.btn.btn-primary.btn-sm2(onclick="addAgency()") Add       
+
+        //-   br    
+            
+        //-   br
+        //-   br
+        //-   button.btn.btn-primary(type='button') Submit!
+
+         
+
+
+    script.
+
+        var arrayAssistanceID = [];
+        var counter = 1;
+
+
+        class AssistanceListItem {  
+
+            constructor(name, idInArray) {
+                this.name = name;
+                this.idInArray = idInArray;
+                console.log(idInArray);
+                console.log(name);
+
+
+            }         
+
+
+        }
+
+        function removeFromAssistanceList(id){
+
+
+
+            var formInfo = document.forms['form-create-report'];
+            var list = document.getElementById("assistanceList");
+            var listItem = document.getElementById("list"+id);
+            list.removeChild(listItem);
+
+            for(var i = 0; i < arrayAssistanceID.length; i++){
+
+            if(arrayAssistanceID[i].idInArray == id){
+
+            console.log(arrayAssistanceID[i].name);
+            arrayAssistanceID.splice(i , 1);
+
+
+            }
+
+
+            }
+
+
+
+            console.log(arrayAssistanceID);
+            var JSONdata = JSON.stringify(getAssistanceNameFromAssistanceList());
+            formInfo.assistance_id.value = JSONdata;
+            console.log(JSONdata);
+
+
+
+
+        }
+
+        function getAssistanceNameFromAssistanceList(){
+
+            var assistName = [];
+
+            for(var i = 0 ; i < arrayAssistanceID.length; i++ ){
+                    
+                    assistName[i] = arrayAssistanceID[i].name;
+ 
+            }
+
+            return assistName;
+
+
+        }   
+
+        function increCounter(){
+
+            counter++;
+        } 
+
+
+        function addAssistanceList(item, itemID){
+
+             increCounter();
+             var assist = new AssistanceListItem(itemID , counter);
+ 
+
+            arrayAssistanceID.push(assist);
+            //- console.log(arrayAssistanceID);
+            var formInfo = document.forms['form-create-report'];
+            var JSONdata = JSON.stringify(getAssistanceNameFromAssistanceList());
+            formInfo.assistance_id.value = JSONdata;
+            //- console.log(JSONdata);
+
+
+
+            var closeButton = document.createElement("button");
+            closeButton.className = "close";
+            var closeID = "closeButton" + counter;
+            console.log("closeButton" + counter);
+
+            closeButton.id = closeID
+            closeButton.type = "button";
+            closeButton.setAttribute('aria-label' , 'close');
+            closeButton.setAttribute('value' , counter);
+            closeButton.setAttribute('onclick' , 'removeFromAssistanceList(value);');
+
+            var closeSpan = document.createElement("span");
+            closeSpan.setAttribute('aria-hidden' , 'true');
+            var text = document.createTextNode('x');
+            closeSpan.appendChild(text);
+            closeButton.appendChild(closeSpan);
+
+            var list = document.getElementById("assistanceList");
+            var selectList = document.createElement("li"); 
+            selectList.id = "list" + counter;
+            selectList.className = "list-group-item";
+            selectList.appendChild(closeButton);
+            var text = document.createTextNode(item);
+            selectList.appendChild(text);
+            list.appendChild(selectList);
+ 
+ 
+             
+
+        }
+
+        function addAgency(){
+
+            var arrayData = '!{arr2}';
+ 
+
+            var data = JSON.parse(arrayData);
+            console.log(data[0].assistance_name); 
+
+            var array = []; 
+
+            for(var i = 0; i < 4; i ++){
+
+                array[i] = data[i].assistance_name;
+
+
+            }
+            
+
+            //Create and append select list
+            var selectList = document.createElement("select");  
+             selectList.id = "agents";
+ 
+            //Create and append the options
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                selectList.appendChild(option);
+            }
+                        
+            var para = document.createElement("t1");
+            var node = document.createTextNode("Agencies ");
+
+            para.appendChild(node);
+            para.appendChild(selectList);
+
+            var element = document.getElementById("formId");
+            var br = document.createElement("br");
+ 
+            element.appendChild(para);
+            element.appendChild(br);
+
+
+        } 
+
+        var map;
+        var markers = [];
+        var currentMarker = {};
+        var geocoder;
+        var infoWindow;
+        var form_Address = document.getElementById('form-address');
+        var form_Lat = document.getElementById('form-lat');
+        var form_Lng = document.getElementById('form-lng');
+
+        // Method accessed on API callback
+        function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 1.352083, lng: 103.819836 }, // LatLng of Singapore
+                    zoom: 11.5
+                });    
+
+                map.addListener('click', function(e){
+                    parseMarker(e.latLng, map);
+                });   
+
+                geocoder = new google.maps.Geocoder;
+                infoWindow = new google.maps.InfoWindow;
+
+        }
+
+        // Checks if another Marker has already been placed on map
+        // If so, remove previous marker and set new one.
+        // Otherwise, just set a new marker
+        function parseMarker(latLng, map){
+            if(isEmpty(currentMarker)){
+                setMarker(latLng, map)
+            }else{
+                removeMarkers();
+                setMarker(latLng, map)
+            }
+        }
+
+        // Sets marker on the map
+        function setMarker(latLng, map){
+            var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+            map.panTo(latLng);
+            markers.push(marker);
+            reverseGeocode(geocoder, map, infoWindow, latLng, marker);
+        }
+
+        // Gets location address based on lat & lng
+        function reverseGeocode(geocoder, map, infowindow, latLng, marker) {
+            geocoder.geocode({'location': latLng}, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        currentMarker.address = results[0].formatted_address.replace(/,/g, '');
+                        currentMarker.lat = latLng.lat();
+                        currentMarker.lng = latLng.lng();
+                        form_Address.value = currentMarker.address;
+                        form_Lat.value = latLng.lat();
+                        form_Lng.value = latLng.lng();
+                    } else {
+                       window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+        // Removes Marker from Map
+        function removeMarkers(){
+            for(var i=0;i<markers.length;i++){
+                markers[i].setMap(null);
+            }
+        }
+
+        // Checks if object is empty
+        function isEmpty(obj){
+            for(var key in obj){
+                if(obj.hasOwnProperty(key)){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    // API Call
+    script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdPOsbD2Dg8qse475kMZjuhmEWz0wcp9c&callback=initMap")
+
+  

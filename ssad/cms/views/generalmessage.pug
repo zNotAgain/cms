@@ -1,0 +1,26 @@
+extends layoutAdmin
+
+block content
+
+
+
+  br
+  br
+
+  .bg-color-container
+    
+      h1 Add Announcement
+      hr
+      t1 Add a new announcement here
+      form#formId(role='form', method="POST", action='../generalmessage')
+        hr
+        .form-group
+            label(for='postTitle') Title
+            input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', placeholder='Title', name='title')
+        .form-group
+            label(for='TextArea') Content
+            textarea#TextArea.form-control(rows='5', name='content')
+
+        button.btn.btn-primary(type='submit') Submit
+
+ 

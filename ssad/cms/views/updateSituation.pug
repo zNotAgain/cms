@@ -1,0 +1,33 @@
+extends layoutAdmin
+
+block content
+ 
+ 
+  br
+  br
+
+
+
+
+  .bg-color-container  
+        h1 Update Situation 
+        t1 Update Situation status here
+        hr
+        form#formId
+            t1 Situation
+            .form-group
+            label(for='TextArea') Contents
+            textarea#TextArea.form-control(rows='5')          
+            .form-row
+              .form-group.col-md-6
+                  label(for='Address') Address
+                  input.form-control(type='text', placeholder='Address')
+              .form-group.col-md-4
+                  label(for='Address2') Postal Code
+                  input.form-control(type='text', placeholder='Address')                
+            .form-group
+              label(for='InputName') Reporter Name
+              input#exampleInputPassword1.form-control(type='text', placeholder='Name')
+              small#emailHelp.form-text.text-muted We'll never share your name with anyone else.             
+            button.btn.btn-primary(type='button') Submit!
+  
